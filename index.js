@@ -30,11 +30,12 @@ Target: 720
 */
 
 const calcProduct = num => {
-    return num.toString().split('').map(Number).filter(idx => idx).reduce((a, b) => a * b, 1);
+    return num.toString()
+        .split('')
+        .map(Number)
+        .filter(idx => idx)
+        .reduce((a, b) => a * b, 1);
 };
-
-console.log(calcProduct(720));
-
 
 const traverseNumPyramid = (target, numPyr) => {
     if (isNaN(target) || target.length < 2) {
@@ -43,6 +44,25 @@ const traverseNumPyramid = (target, numPyr) => {
     if (!Array.isArray(numPyr)) {
         throw new Error('Invalid pyramid input: must be an array!');
     }
-    console.log(numPyr);
-    const product = calcProduct(target);
+
+    let prevIdx = 0;
+    let curRow = 1;
+    let curDir = '';
+
+    const paths = [
+        numPyr[prevIdx],
+        numPyr[prevIdx] + 1
+    ];
+
+    paths.forEach((num, idx) => {
+        const direction = idx ? 'left' : 'right';
+        numPyr[idx] += numPyr[idx];
+        curRow++;
+        curDir += direction;
+    });
 };
+
+const myTarget = 720;
+const myPyramid = [[2], [4, 3], [3, 2, 6], [2, 9, 5, 2], [10, 5, 2, 15, 5]];
+
+console.log(traverseNumPyramid(myTarget, myPyramid));
